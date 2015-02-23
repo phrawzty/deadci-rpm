@@ -1,0 +1,14 @@
+[Unit]
+Description=DeadCI is a lightweight continuous integration and testing web server.
+Documentation=https://deadci.com/
+
+[Service]
+User=deadci
+Group=deadci
+EnvironmentFile=-/etc/sysconfig/deadci
+ExecStart=/usr/bin/deadci $CMD_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
