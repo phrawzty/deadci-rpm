@@ -32,11 +32,10 @@ inside a Docker container.
 mkdir -p %{buildroot}/%{_bindir}
 cp %{name} %{buildroot}/%{_bindir}
 cp travis-local/travis-local %{buildroot}/%{_bindir}
-mkdir -p %{buildroot}/%{_sysconfdir}/%{name}
-cp %{name}.ini %{buildroot}/%{_sysconfdir}/%{name}/%{name}.ini-DIST
+mkdir -p %{buildroot}/%{_sharedstatedir}/%{name}
+cp %{name}.ini %{buildroot}/%{_sharedstatedir}/%{name}/%{name}.ini-DIST
 mkdir -p %{buildroot}/%{_sysconfdir}/sysconfig
 cp %{SOURCE1} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
-mkdir -p %{buildroot}/%{_sharedstatedir}/%{name}
 
 %if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 mkdir -p %{buildroot}/%{_unitdir}
@@ -79,10 +78,9 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%attr(750, root, deadci) %{_sysconfdir}/%{name}
 %{_sysconfdir}/sysconfig/%{name}
 %attr(750, deadci, deadci) %{_sharedstatedir}/%{name}
-%attr(750, deadci, deadci) %{_sysconfdir}/%{name}/%{name}.ini-DIST
+%attr(660, deadci, deadci) %{_sharedstatedir}/%{name}/%{name}.ini-DIST
 %if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 %{_unitdir}/%{name}.service
 %else

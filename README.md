@@ -1,10 +1,10 @@
 # RPM Spec for DeadCI
 
-Tries to follow the [packaging guidelines](https://fedoraproject.org/wiki/Packaging:Guidelines) from Fedora.
-
-* Binary: `/usr/bin/deadci`
-* Config: `/etc/deadci/`
-* Sysconfig: `/etc/sysconfig/deadci`
+I tried to follow the Fedora [packaging guidelines](https://fedoraproject.org/wiki/Packaging:Guidelines);
+however, DeadCI expects the config file to be in the working directory, which
+means that `/etc/deadci/` is not sufficiently accessible once permissions have
+been dropped to the `deadci` user. In short, config is in `/var/lib/deadci/`
+whether we like it or not.
 
 # Build (automated)
 
@@ -56,10 +56,9 @@ To build the RPM (non-root user):
 
 # Run
 
-1. Install the rpm
-2. Put config files in `/etc/deadci/`
-3. Change command line arguments to deadci in `/etc/sysconfig/deadci`. 
-4. Start the service and tail the logs `systemctl start deadci.service` and `journalctl -f`
+* Install the rpm.
+* Modify `/var/lib/deadci/deadci.ini` as necessary.
+* Start the service and tail the logs `systemctl start deadci.service` and `journalctl -f`
   * To enable at reboot `systemctl enable deadci.service`
 
 # More info
