@@ -1,5 +1,5 @@
 Name:           deadci
-Version:        0.0.1
+Version:	%{getenv:EPOCH}
 Release:        1%{?dist}
 Summary:        DeadCI is a lightweight continuous integration and testing web server.
 Group:          System Environment/Daemons

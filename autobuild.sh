@@ -10,5 +10,11 @@ if [ ! -d "RPM_BUILD_DIR" ]; then
     cp ./SOURCES/deadci.* $HOME/rpmbuild/SOURCES/
 fi
 
+# Upstream doesn't use versioning (grr), so get the epoch stamp for the most
+# recent build. There's no guarantee that the released archive matches up
+# with the last commit, but this is the best we've got.
+commit_date=`curl -s https://api.github.com/repos/phayes/deadci/commits?per_page=1 | grep -m 1 date | cut -d '"' -f 4`
+export EPOCH=`date --date="${commit_date}" +%s`
+
 spectool -g -R $HOME/rpmbuild/SPECS/deadci.spec
 rpmbuild -ba $HOME/rpmbuild/SPECS/deadci.spec
