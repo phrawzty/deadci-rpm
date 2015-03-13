@@ -1,6 +1,6 @@
 Name:           deadci
 Version:	%{getenv:EPOCH}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        DeadCI is a lightweight continuous integration and testing web server.
 Group:          System Environment/Daemons
 License:        BSD
@@ -94,5 +94,7 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri Mar 13 2015 Dan Phrawzty <phrawzty@mozilla.com>
+- release 2 (fix sysconfig)
 * Mon Feb 23 2015 Dan Phrawzty <phrawzty@mozilla.com>
-- init 0.0.1 (upstream has no versioning)
+- release 1 (upstream has no versioning)
