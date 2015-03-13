@@ -26,30 +26,29 @@ whether we like it or not.
 
 To build the RPM (non-root user):
 
-1. Check out this repo
-2. Install rpmdevtools and mock 
-
+* Check out this repo. Nice, no?
+* Install `rpmdevtools` and `mock`. 
     ```
     sudo yum install rpmdevtools mock
     ```
-3. Set up your rpmbuild directory tree
 
+* Set up your rpmbuild directory tree.
     ```
     rpmdev-setuptree
     ```
-4. Link the spec file and sources from the repository into your rpmbuild/SOURCES directory
 
+* Link the spec file and sources.
     ```
-    ln -s ${repo}/SPECS/deadci.spec rpmbuild/SPECS/
-    ln -s ${repo}/SOURCES/* rpmbuild/SOURCES/
+    ln -s $HOME/consul-rpm/SPECS/consul.spec rpmbuild/SPECS/
+    find $HOME/consul-rpm/SOURCES -type f -exec ln -s {} rpmbuild/SOURCES/ \;
     ```
-5. Download remote source files
 
+* Download remote source files.
     ```
     spectool -g -R rpmbuild/SPECS/deadci.spec
     ```
-6. Build the RPM
 
+* Build the RPM.
     ```
     rpmbuild -ba rpmbuild/SPECS/deadci.spec
     ```
