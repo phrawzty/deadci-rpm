@@ -1,1 +1,1 @@
-CMD_OPTS="--data-dir=/etc/deadci"
+CMD_OPTS="--data-dir=/var/lib/deadci"
