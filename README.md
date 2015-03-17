@@ -39,8 +39,8 @@ To build the RPM (non-root user):
 
 * Link the spec file and sources.
     ```
-    ln -s $HOME/consul-rpm/SPECS/consul.spec rpmbuild/SPECS/
-    find $HOME/consul-rpm/SOURCES -type f -exec ln -s {} rpmbuild/SOURCES/ \;
+    ln -s $HOME/deadci-rpm/SPECS/deadci.spec rpmbuild/SPECS/
+    find $HOME/deadci-rpm/SOURCES -type f -exec ln -s {} rpmbuild/SOURCES/ \;
     ```
 
 * Download remote source files.
