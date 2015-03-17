@@ -6,23 +6,13 @@ means that `/etc/deadci/` is not sufficiently accessible once permissions have
 been dropped to the `deadci` user. In short, config is in `/var/lib/deadci/`
 whether we like it or not.
 
-# Build (automated)
+## Upstream
 
-* Ensure that `rpmdevtools` and `mock` are available:
+I'm not sure if [dhayes](https://github.com/phayes/deadci) is interested in
+contributions, so for now, this SPEC uses [my fork](https://github.com/phrawzty/deadci)
+as the upstream.
 
-    ```
-    sudo yum install rpmdevtools mock
-    ```
-
-* Run `autobuild.sh`:
-
-    ```
-    cd ${repo}/
-    chmod u+x autobuild.sh
-    ./autobuild.sh
-    ```
-
-# Build (manual)
+# Build
 
 To build the RPM (non-root user):
 
