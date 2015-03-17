@@ -1,18 +1,21 @@
+%global go_import_path github.com/phrawzty/deadci
+%global rev 2bc162f673dcd5028c272c91e463fde3fbf65a8d
+%global shortrev %(r=%{rev}; echo ${r:0:12})
+
 Name:           deadci
-Version:	%{getenv:EPOCH}
-Release:        2%{?dist}
+Version:	0
+Release:        1.git%{shortrev}%{?dist}
 Summary:        DeadCI is a lightweight continuous integration and testing web server.
 Group:          System Environment/Daemons
 License:        BSD
 URL:            https://deadci.com
-Source0:        https://phayes.github.io/bin/current/%{name}/linux/%{name}.tar.gz
+Source0:	https://github.com/phrawzty/%{name}/archive/%{rev}/%{name}-%{rev}.tar.gz
 Source1:        %{name}.sysconfig
 Source2:        %{name}.service
 Source3:        %{name}.init
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-
 %if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
-BuildRequires:  systemd-units
+BuildRequires:  systemd-units, golang >= 1.3.0, mercurial
 Requires:       systemd
 %endif
 Requires(pre): shadow-utils
@@ -26,11 +29,17 @@ root of the repository being built. It's easy to run TravisCI jobs from a
 inside a Docker container. 
 
 %prep
-%setup -q -c
+
+%setup -qn %{name}-%{rev}
+
+%build
+export GOPATH=`pwd`
+go get %{go_import_path}
+go build %{go_import_path}
 
 %install
 mkdir -p %{buildroot}/%{_bindir}
-cp %{name} %{buildroot}/%{_bindir}
+cp bin/%{name} %{buildroot}/%{_bindir}
 cp travis-local/travis-local %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}/%{_sharedstatedir}/%{name}
 cp %{name}.ini %{buildroot}/%{_sharedstatedir}/%{name}/%{name}.ini-DIST
@@ -79,7 +88,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{_sysconfdir}/sysconfig/%{name}
-%attr(750, deadci, deadci) %{_sharedstatedir}/%{name}
+%dir %attr(750, deadci, deadci) %{_sharedstatedir}/%{name}
 %attr(660, deadci, deadci) %{_sharedstatedir}/%{name}/%{name}.ini-DIST
 %if 0%{?fedora} >= 14 || 0%{?rhel} >= 7
 %{_unitdir}/%{name}.service
@@ -92,8 +101,9 @@ rm -rf %{buildroot}
 %doc
 
 
-
 %changelog
+* Tue Mar 17 2015 Dan Phrawzty <phrawzty@mozilla.com>
+- Switch to new upstream.
 * Fri Mar 13 2015 Dan Phrawzty <phrawzty@mozilla.com>
 - release 2 (fix sysconfig)
 * Mon Feb 23 2015 Dan Phrawzty <phrawzty@mozilla.com>
