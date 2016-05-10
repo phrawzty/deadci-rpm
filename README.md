@@ -8,7 +8,7 @@ whether we like it or not.
 
 ## Upstream
 
-I'm not sure if [dhayes](https://github.com/phayes/deadci) is interested in
+I'm not sure if [phayes](https://github.com/phayes/deadci) is interested in
 contributions, so for now, this SPEC uses [my fork](https://github.com/phrawzty/deadci)
 as the upstream.
 
